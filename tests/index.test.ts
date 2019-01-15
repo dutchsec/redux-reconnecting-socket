@@ -1,4 +1,4 @@
-import { middleware } from '../lib';
+import { tsReduxSocket } from '../lib';
 import { AnyAction } from 'redux';
 
 const create = () => {
@@ -8,7 +8,7 @@ const create = () => {
 	};
 
 	const next = jest.fn();
-	const invoke = (action: AnyAction) => middleware(store)(next)(action);
+	const invoke = (action: AnyAction) => tsReduxSocket('ws://test')(store)(next)(action);
 
 	return { store, next, invoke };
 };

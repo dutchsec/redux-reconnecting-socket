@@ -6,6 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
+    "npm-install-peers": "npm-install-peers",
     "test": "npm install --no-save redux && jest --config=jest.config.json",
     "test:watch": "npm install --no-save redux && jest --config=jest.config.json --watch"
   },
@@ -14,10 +15,14 @@
   "devDependencies": {
     "@types/jest": "^23.3.12",
     "jest": "^23.6.0",
+    "npm-install-peers": "^1.2.1",
     "ts-jest": "^23.10.5",
     "typescript": "^3.2.2"
   },
   "peerDependencies": {
     "redux": "^4.0.1"
+  },
+  "dependencies": {
+    "reconnecting-websocket": "^4.1.10"
   }
 }

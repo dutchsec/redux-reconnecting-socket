@@ -1,0 +1,5 @@
+export const SOCKET_CONNECT = 'SOCKET_CONNECT';
+export const SOCKET_SEND = 'SOCKET_SEND';
+export const SOCKET_RECEIVE = 'SOCKET_RECEIVE';
+export const SOCKET_CLOSE = 'SOCKET_CLOSE';
+export const SOCKET_ERROR = 'SOCKET_ERROR';
