@@ -1,0 +1,15 @@
+{
+  "verbose": true,
+  "moduleDirectories": [
+    "node_modules",
+    "lib"
+  ],
+  "moduleFileExtensions": [
+    "ts",
+    "js"
+  ],
+  "transform": {
+    "^.+\\.ts$": "ts-jest"
+  },
+  "testRegex": "./tests/.*"
+}

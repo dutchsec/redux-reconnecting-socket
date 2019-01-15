@@ -1,0 +1,23 @@
+{
+  "name": "ts-redux-socket",
+  "version": "1.0.0",
+  "description": "Typescript Redux socket",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "npm install --no-save redux && jest --config=jest.config.json",
+    "test:watch": "npm install --no-save redux && jest --config=jest.config.json --watch"
+  },
+  "author": "Thomas Kuipers",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^23.3.12",
+    "jest": "^23.6.0",
+    "ts-jest": "^23.10.5",
+    "typescript": "^3.2.2"
+  },
+  "peerDependencies": {
+    "redux": "^4.0.1"
+  }
+}
