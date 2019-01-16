@@ -101,4 +101,3 @@ request.then(
 A numeric `requestId` will automatically be generated and added in the message to
 the server. When the server sends a message that includes the same `requestId`,
 the request promise will be completed.
-
