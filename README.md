@@ -37,21 +37,18 @@ import {
 export const rootReducer =  (history: History) => combineReducers({
     authentication: authenticationReducer,
 	connection: reduxReconnectingSocketReducer,
-    honeyfarm: honeyfarmReducer,
     router: connectRouter(history),
 });
 
 export interface AppState {
     authentication: AuthenticationState;
     connection: ReduxReconnectingSocketState;
-    honeyfarm: HoneyfarmState;
     router: RouterState;
 }
 
 export const defaultAppState: AppState = {
     authentication: defaultAuthenticationState,
     connection: defaulReduxReconnectingSocketState,
-    honeyfarm: defaultHoneyfarmState,
     router: null,
 };
 ```
@@ -77,7 +74,7 @@ dispatch({
     payload: {
         message: 'Hello server!'
     }
-})
+});
 ```
 
 ### 5. Listen to server messages in your own middlewares and reducers
@@ -93,7 +90,7 @@ const request = dispatch({
     payload: {
         message: 'Hello server!'
     }
-})
+});
 
 request.then(
     () => console.log('Success'),
