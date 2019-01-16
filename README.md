@@ -88,7 +88,7 @@ automatically dispatched as an action.
 ```
 const request = dispatch({
     sendToServer: true,
-    promise: true
+    promise: true,
     type: 'MY_ACTION',
     payload: {
         message: 'Hello server!'
