@@ -3,8 +3,13 @@
     "target": "es2015",
     "module": "commonjs",
     "declaration": true,
+    "rootDir": "./lib",
     "outDir": "./dist",
     "strict": true,
     "types": ["jest"]
-  }
+  },
+  "exclude": [
+    "tests",
+    "dist"
+  ]
 }

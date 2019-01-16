@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
+    "start": "tsc --watch",
     "build": "tsc",
     "npm-install-peers": "npm-install-peers",
     "test": "npm install --no-save redux && jest --config=jest.config.json",

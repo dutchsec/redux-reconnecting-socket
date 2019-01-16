@@ -1,9 +1,8 @@
 import { AnyAction } from 'redux';
 import {
-	SOCKET_CLOSE,
-	SOCKET_CONNECT, SOCKET_ERROR,
-	SOCKET_RECEIVE,
-	SOCKET_SEND
+	SERVER_ERROR,
+	SOCKET_CLOSE, SOCKET_CLOSED,
+	SOCKET_CONNECT, SOCKET_ERROR, SOCKET_OPENED,
 } from './constants';
 
 export function socketConnect(uri: string): AnyAction {
@@ -15,35 +14,37 @@ export function socketConnect(uri: string): AnyAction {
 	};
 }
 
-export function socketSend(action: any): AnyAction {
-	return {
-		type: SOCKET_SEND,
-		payload: {
-			action
-		}
-	};
-}
-
-export function socketReceive(action: any): AnyAction {
-	return {
-		type: SOCKET_RECEIVE,
-		payload: {
-			action
-		}
-	};
-}
-
-export function socketError(message: string): AnyAction {
+export function socketError(code: number, message: string): AnyAction {
 	return {
 		type: SOCKET_ERROR,
 		payload: {
+			code,
 			message
 		}
 	}
+}
+
+export function serverError(payload: any) {
+	return {
+		type: SERVER_ERROR,
+		payload
+	};
 }
 
 export function socketClose(): AnyAction {
 	return {
 		type: SOCKET_CLOSE,
 	}
+}
+
+export function socketOpened(): AnyAction {
+	return {
+		type: SOCKET_OPENED
+	};
+}
+
+export function socketClosed(): AnyAction {
+	return {
+		type: SOCKET_CLOSED
+	};
 }
