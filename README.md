@@ -62,9 +62,9 @@ import { socketConnect } from '../../redux-reconnecting-socket/dist/actions';
 
 class App extends React.Component<Props> {
     componentDidMount() {
-        const { dispatch, backendHost } = this.props;
+        const { dispatch  } = this.props;
 
-		dispatch(socketConnect(getSocketUri(backendHost)));
+		dispatch(socketConnect('ws://localhost:4000/ws'));
     }
     ...
 ```
