@@ -146,7 +146,7 @@ And the server responds with:
 ```js
 {
     requestId: 1, // The same request id that was sent in the request
-    type: 'ERROR',
+    type: 'ERROR', // The configurable errorType
     payload: {
         message: 'Hello client! Something went wrong.'
     }
