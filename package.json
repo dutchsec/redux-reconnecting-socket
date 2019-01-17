@@ -1,6 +1,6 @@
 {
   "name": "ts-redux-socket",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Typescript Redux socket",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
