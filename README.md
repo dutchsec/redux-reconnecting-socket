@@ -22,7 +22,7 @@ function configureStore(initialState) {
         composeEnhancer(
             applyMiddleware(
                 routerMiddleware(history),
-                thunkMiddleware
+                thunkMiddleware,
                 reduxReconnectingSocket()
             )
         )
@@ -115,7 +115,7 @@ function configureStore(initialState) {
         composeEnhancer(
             applyMiddleware(
                 routerMiddleware(history),
-                thunkMiddleware
+                thunkMiddleware,
                 reduxReconnectingSocket({
                     errorType: 'MY_ERROR_TYPE'
                 })
