@@ -57,7 +57,7 @@ export const defaultAppState = {
 ```js
 import { socketConnect } from 'redux-reconnecting-socket';
 
-class App extends React.Component<Props> {
+class App extends React.Component {
     componentDidMount() {
         const { dispatch  } = this.props;
 
