@@ -36,7 +36,6 @@ Only needed if you want to use the `state.connection.connected` boolean.
 ```js
 import {
     reduxReconnectingSocketReducer,
-    ReduxReconnectingSocketState,
     defaulReduxReconnectingSocketState
 } from 'redux-reconnecting-socket';
 
