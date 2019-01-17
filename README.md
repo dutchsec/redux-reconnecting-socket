@@ -126,8 +126,30 @@ function configureStore(initialState) {
 
 Default: `ERROR`
 
-When the server sends a message with this `type`, the middleware will
-dispatch an action with the type `SERVER_ERROR`.
+Used for rejecting promises when you're using the `promise: true` setting when
+sending messages to the server.
 
-Additionally, this setting is used for rejecting promises when you're using the
-`promise: true` setting when sending messages to the server.
+For example: if you send dispatch this action:
+```js
+const promise = dispatch({
+    sendToServer: true,
+    promise: true,
+    type: 'MY_ACTION',
+    payload: {
+        message: 'Hello server!'
+    }
+})
+```
+
+And the server responds with:
+```js
+{
+    requestId: 1, // the same request id that was automatically generated in the request
+    type: 'ERROR',
+    payload: {
+        message: 'Hello client! Something went wrong.'
+    }
+}
+```
+
+Then the promise will be rejected.

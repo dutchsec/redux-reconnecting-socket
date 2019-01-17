@@ -3,4 +3,3 @@ export const SOCKET_CLOSE = 'SOCKET_CLOSE';
 export const SOCKET_ERROR = 'SOCKET_ERROR';
 export const SOCKET_CLOSED = 'SOCKET_CLOSED';
 export const SOCKET_OPENED = 'SOCKET_OPENED';
-export const SERVER_ERROR = 'SERVER_ERROR';

@@ -1,6 +1,5 @@
 import { AnyAction } from 'redux';
 import {
-	SERVER_ERROR,
 	SOCKET_CLOSE, SOCKET_CLOSED,
 	SOCKET_CONNECT, SOCKET_ERROR, SOCKET_OPENED,
 } from './constants';
@@ -22,13 +21,6 @@ export function socketError(code: number, message: string): AnyAction {
 			message
 		}
 	}
-}
-
-export function serverError(payload: any) {
-	return {
-		type: SERVER_ERROR,
-		payload
-	};
 }
 
 export function socketClose(): AnyAction {

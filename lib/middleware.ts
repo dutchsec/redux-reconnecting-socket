@@ -2,7 +2,6 @@ import { Middleware, AnyAction } from 'redux';
 import ReconnectingWebSocket from 'reconnecting-websocket';
 import { SOCKET_CLOSE, SOCKET_CONNECT } from './constants';
 import {
-	serverError,
 	socketClosed,
 	socketError,
 	socketOpened
@@ -51,10 +50,6 @@ export function reduxReconnectingSocket(config: SocketConfig = defaultConfig): M
 						request.resolve();
 					}
 				}
-			}
-
-			if (data.type === config.errorType) {
-				dispatch(serverError(data));
 			}
 
 			dispatch(data);
