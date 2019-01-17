@@ -137,14 +137,15 @@ const promise = dispatch({
     type: 'MY_ACTION',
     payload: {
         message: 'Hello server!'
-    }
+    },
+    // The numeric property requestId will automatically be generated
 })
 ```
 
 And the server responds with:
 ```js
 {
-    requestId: 1, // the same request id that was automatically generated in the request
+    requestId: 1, // The same request id that was automatically generated in the request
     type: 'ERROR',
     payload: {
         message: 'Hello client! Something went wrong.'
