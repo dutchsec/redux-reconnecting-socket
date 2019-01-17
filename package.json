@@ -1,5 +1,5 @@
 {
-  "name": "ts-redux-socket",
+  "name": "redux-reconnecting-socket",
   "version": "0.1.0",
   "description": "Typescript Redux socket",
   "main": "dist/index.js",
