@@ -1,6 +1,6 @@
 {
   "name": "redux-reconnecting-socket",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Typescript Redux socket",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -25,5 +25,6 @@
   },
   "dependencies": {
     "reconnecting-websocket": "^4.1.10"
-  }
+  },
+  "repository": "dutchsec/redux-reconnecting-socket"
 }

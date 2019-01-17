@@ -3,11 +3,17 @@
 Redux middleware and reducer for creating a websocket connection. When the
 connection drops it will automatically reconnect.
 
+## Installation
+
+```
+npm install --save redux-reconnecting-socket
+```
+
 ## Usage
 
 ### 1. Configure it in your middleware
-```
-import { reduxReconnectingSocket } from '../../redux-reconnecting-socket/dist';
+```js
+import { reduxReconnectingSocket } from 'redux-reconnecting-socket';
 
 function configureStore(initialState) {
     return createStore(
@@ -27,26 +33,20 @@ function configureStore(initialState) {
 ### 2. Configure it in your root reducer (optional)
 Only needed if you want to use the `state.connection.connected` boolean.
 
-```
+```js
 import {
     reduxReconnectingSocketReducer,
     ReduxReconnectingSocketState,
     defaulReduxReconnectingSocketState
-} from '../../redux-reconnecting-socket/dist/reducer';
+} from 'redux-reconnecting-socket';
 
-export const rootReducer =  (history: History) => combineReducers({
+export const rootReducer =  (history) => combineReducers({
     authentication: authenticationReducer,
     connection: reduxReconnectingSocketReducer,
     router: connectRouter(history),
 });
 
-export interface AppState {
-    authentication: AuthenticationState;
-    connection: ReduxReconnectingSocketState;
-    router: RouterState;
-}
-
-export const defaultAppState: AppState = {
+export const defaultAppState = {
     authentication: defaultAuthenticationState,
     connection: defaulReduxReconnectingSocketState,
     router: null,
@@ -54,8 +54,8 @@ export const defaultAppState: AppState = {
 ```
 
 ### 3. Dispatch a `socketConnect` action in your app component
-```
-import { socketConnect } from '../../redux-reconnecting-socket/dist/actions';
+```js
+import { socketConnect } from 'redux-reconnecting-socket';
 
 class App extends React.Component<Props> {
     componentDidMount() {
@@ -67,7 +67,7 @@ class App extends React.Component<Props> {
 ```
 
 ### 4. Send messages to the server by adding `sendToServer: true` to your action types
-```
+```js
 dispatch({
     sendToServer: true,
     type: 'MY_ACTION',
@@ -82,7 +82,7 @@ Whenever the server sends a message over the web socket, the message is
 automatically dispatched as an action.
 
 ### 6. Emulate request/responses by adding `promise: true` to your action types
-```
+```js
 const request = dispatch({
     sendToServer: true,
     promise: true,
