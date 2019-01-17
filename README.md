@@ -131,7 +131,7 @@ function configureStore(initialState) {
 
 Default: `ERROR`
 
-When the server sends a message with this error type, the middleware will
+When the server sends a message with this `type`, the middleware will
 dispatch an action with the type `SERVER_ERROR`.
 
 Additionally, this setting is used for rejecting promises when you're using the
