@@ -94,10 +94,45 @@ const request = dispatch({
 
 request.then(
     () => console.log('Success'),
-    () => console.log('Received an error from the server')
+    () => console.log('Received a message with type: \'ERROR\' from the server')
 );
 ```
 
 A numeric `requestId` will automatically be generated and added in the message to
 the server. When the server sends a message that includes the same `requestId`,
 the request promise will be completed.
+
+## Config
+
+You can configure the reduxReconnectingSocket middleware like this:
+```js
+import { reduxReconnectingSocket } from 'redux-reconnecting-socket';
+
+function configureStore(initialState) {
+    return createStore(
+        rootReducer(history),
+        initialState,
+        composeEnhancer(
+            applyMiddleware(
+                routerMiddleware(history),
+                thunkMiddleware
+                reduxReconnectingSocket({
+                    errorType: 'MY_ERROR_TYPE'
+                })
+            )
+        )
+    );
+}
+```
+
+### Configuration options
+
+#### `errorType`: `string`
+
+Default: `ERROR`
+
+When the server sends a message with this error type, the middleware will
+dispatch an action with the type `SERVER_ERROR`.
+
+Additionally, this setting is used for rejecting promises when you're using the
+`promise: true` setting when sending messages to the server.
