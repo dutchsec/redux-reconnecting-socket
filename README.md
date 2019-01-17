@@ -17,10 +17,10 @@ function configureStore(initialState) {
             applyMiddleware(
                 routerMiddleware(history),
                 thunkMiddleware
-				reduxReconnectingSocket()
+                reduxReconnectingSocket()
             )
         )
-	);
+    );
 }
 ```
 
@@ -36,7 +36,7 @@ import {
 
 export const rootReducer =  (history: History) => combineReducers({
     authentication: authenticationReducer,
-	connection: reduxReconnectingSocketReducer,
+    connection: reduxReconnectingSocketReducer,
     router: connectRouter(history),
 });
 
@@ -61,7 +61,7 @@ class App extends React.Component<Props> {
     componentDidMount() {
         const { dispatch  } = this.props;
 
-		dispatch(socketConnect('ws://localhost:4000/ws'));
+        dispatch(socketConnect('ws://localhost:4000/ws'));
     }
     ...
 ```
