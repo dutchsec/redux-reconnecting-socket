@@ -22,7 +22,6 @@ function configureStore(initialState) {
         composeEnhancer(
             applyMiddleware(
                 routerMiddleware(history),
-                thunkMiddleware,
                 reduxReconnectingSocket()
             )
         )
@@ -40,13 +39,11 @@ import {
 } from 'redux-reconnecting-socket';
 
 export const rootReducer =  (history) => combineReducers({
-    authentication: authenticationReducer,
     connection: reduxReconnectingSocketReducer,
     router: connectRouter(history),
 });
 
 export const defaultAppState = {
-    authentication: defaultAuthenticationState,
     connection: defaulReduxReconnectingSocketState,
     router: null,
 };
@@ -114,7 +111,6 @@ function configureStore(initialState) {
         composeEnhancer(
             applyMiddleware(
                 routerMiddleware(history),
-                thunkMiddleware,
                 reduxReconnectingSocket({
                     errorType: 'MY_ERROR_TYPE'
                 })
