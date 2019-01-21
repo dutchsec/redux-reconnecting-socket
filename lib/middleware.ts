@@ -70,8 +70,11 @@ export function reduxReconnectingSocket(config: SocketConfig = defaultConfig): M
 				}
 
 				action = { ...action };
-				action.requestId = requestId;
-				requestId ++;
+
+				if (typeof action.requestId === 'undefined') {
+					action.requestId = requestId;
+					requestId ++;
+				}
 
 				let promise;
 
