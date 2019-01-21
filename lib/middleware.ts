@@ -9,8 +9,8 @@ import {
 
 interface UnfinishedRequests {
 	[requestId: string]: {
-		resolve: () => void;
-		reject: () => void;
+		resolve: (value?: any) => void;
+		reject: (reason?: any) => void;
 	};
 }
 
@@ -45,9 +45,9 @@ export function reduxReconnectingSocket(config: SocketConfig = defaultConfig): M
 
 				if (request) {
 					if (data.type === config.errorType) {
-						request.reject();
+						request.reject(data);
 					} else {
-						request.resolve();
+						request.resolve(data);
 					}
 				}
 			}
@@ -69,6 +69,7 @@ export function reduxReconnectingSocket(config: SocketConfig = defaultConfig): M
 					throw new Error('Tried to send a message before connecting.');
 				}
 
+				action = { ...action };
 				action.requestId = requestId;
 				requestId ++;
 
@@ -82,6 +83,9 @@ export function reduxReconnectingSocket(config: SocketConfig = defaultConfig): M
 						}
 					);
 				}
+
+				delete action.sendToServer;
+				delete action.promise;
 
 				console.log('Send', action);
 				socket.send(JSON.stringify(action));
