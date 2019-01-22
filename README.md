@@ -89,14 +89,39 @@ const request = dispatch({
 });
 
 request.then(
-    () => console.log('Success'),
-    () => console.log('Received a message with type: \'ERROR\' from the server')
+    (actionFromServer) => console.log('Success, received this action from the server', actionFromServer),
+    (actionFromServer) => console.log('Received a message with type: \'ERROR\' from the server:', actionFromServer)
 );
 ```
 
 A numeric `requestId` will automatically be generated and added in the message to
 the server. When the server sends a message that includes the same `requestId`,
 the request promise will be completed.
+
+Additionally, you have the option to cancel requests:
+```js
+const request = dispatch({
+    sendToServer: true,
+    promise: true,
+    type: 'MY_ACTION',
+    payload: {
+        message: 'Hello server!'
+    }
+});
+
+request.cancel();
+```
+
+Three things will happen when you `cancel` a request:
+1. The message from the server with this `requestId` will be ignored. It will not be dispatched.
+2. The `request` promise will be rejected.
+3. A `CANCEL_REQUEST` message will be sent to the server:
+```js
+{
+    type: 'CANCEL_REQUEST',
+    requestId: 1
+}
+```
 
 ## Config
 

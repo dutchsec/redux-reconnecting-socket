@@ -2,16 +2,21 @@ import { Middleware, AnyAction } from 'redux';
 import ReconnectingWebSocket from 'reconnecting-websocket';
 import { SOCKET_CLOSE, SOCKET_CONNECT } from './constants';
 import {
+	cancelRequest,
 	socketClosed,
 	socketError,
 	socketOpened
 } from './actions';
 
+interface UnfinishedRequest {
+	resolve: (value?: any) => void;
+	reject: (reason?: any) => void;
+	completed: boolean;
+	cancelled: boolean;
+}
+
 interface UnfinishedRequests {
-	[requestId: string]: {
-		resolve: (value?: any) => void;
-		reject: (reason?: any) => void;
-	};
+	[requestId: string]: UnfinishedRequest;
 }
 
 export interface SocketConfig {
@@ -39,20 +44,21 @@ export function reduxReconnectingSocket(config: SocketConfig = defaultConfig): M
 
 		function onMessage(action: any) {
 			const data = JSON.parse(action.data);
+			const request = unfinishedRequests[data.requestId];
 
-			if (data.requestId) {
-				const request = unfinishedRequests[data.requestId];
-
-				if (request) {
-					if (data.type === config.errorType) {
-						request.reject(data);
-					} else {
-						request.resolve(data);
-					}
+			if (request && !request.cancelled) {
+				if (data.type === config.errorType) {
+					request.reject(data);
+				} else {
+					request.resolve(data);
 				}
+
+				request.completed = true;
 			}
 
-			dispatch(data);
+			if (!request || !request.cancelled) {
+				dispatch(data);
+			}
 		}
 
 		function onError(code: number, message: string) {
@@ -82,9 +88,24 @@ export function reduxReconnectingSocket(config: SocketConfig = defaultConfig): M
 					promise = new Promise((resolve, reject) =>
 						unfinishedRequests[action.requestId] = {
 							resolve,
-							reject
+							reject,
+							completed: false,
+							cancelled: false
 						}
-					);
+					) as CancellablePromise;
+
+					promise.cancel = () => {
+						const unfinishedRequest = unfinishedRequests[action.requestId];
+
+						if (unfinishedRequest && !unfinishedRequest.completed) {
+							unfinishedRequest.reject(new Error('Request got cancelled'));
+							unfinishedRequest.cancelled = true;
+
+							const cancelAction = cancelRequest(action.requestId);
+							console.log('Send', cancelAction);
+							socket.send(cancelAction);
+						}
+					}
 				}
 
 				delete action.sendToServer;
@@ -216,4 +237,8 @@ function getCloseMessage(code: number): string {
 		default:
 			return 'Unknown reason';
 	}
+}
+
+export interface CancellablePromise extends Promise<any> {
+	cancel: () => void;
 }

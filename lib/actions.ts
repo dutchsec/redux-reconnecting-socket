@@ -1,5 +1,6 @@
 import { AnyAction } from 'redux';
 import {
+	CANCEL_REQUEST,
 	SOCKET_CLOSE, SOCKET_CLOSED,
 	SOCKET_CONNECT, SOCKET_ERROR, SOCKET_OPENED,
 } from './constants';
@@ -38,5 +39,12 @@ export function socketOpened(): AnyAction {
 export function socketClosed(): AnyAction {
 	return {
 		type: SOCKET_CLOSED
+	};
+}
+
+export function cancelRequest(requestId: number): AnyAction {
+	return {
+		type: CANCEL_REQUEST,
+		requestId
 	};
 }
