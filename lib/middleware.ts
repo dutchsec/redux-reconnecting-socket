@@ -103,7 +103,7 @@ export function reduxReconnectingSocket(config: SocketConfig = defaultConfig): M
 
 							const cancelAction = cancelRequest(action.requestId);
 							console.log('Send', cancelAction);
-							socket.send(cancelAction);
+							socket.send(JSON.stringify(cancelAction));
 						}
 					}
 				}
