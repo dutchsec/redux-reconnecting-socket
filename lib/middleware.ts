@@ -66,6 +66,14 @@ export function reduxReconnectingSocket(config: SocketConfig = defaultConfig): M
 		}
 
 		function onClose() {
+			Object.keys(unfinishedRequests).forEach(requestId => {
+				const request = unfinishedRequests[requestId];
+
+				if (!request.completed) {
+					request.reject(new Error('Connection closed'));
+				}
+			});
+
 			dispatch(socketClosed());
 		}
 
