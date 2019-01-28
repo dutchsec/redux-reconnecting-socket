@@ -35,7 +35,7 @@ export function reduxReconnectingSocket(config: SocketConfig = defaultConfig): M
 
 	return ({ dispatch }) => {
 		let socket: SocketAbstraction;
-		const unfinishedRequests: UnfinishedRequests = {};
+		let unfinishedRequests: UnfinishedRequests = {};
 		let requestId: number = 0;
 
 		function onOpen() {
@@ -73,6 +73,8 @@ export function reduxReconnectingSocket(config: SocketConfig = defaultConfig): M
 					request.reject(new Error('Connection closed'));
 				}
 			});
+
+			unfinishedRequests = {};
 
 			dispatch(socketClosed());
 		}
