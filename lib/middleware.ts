@@ -125,6 +125,7 @@ export function reduxReconnectingSocket(config: SocketConfig = defaultConfig): M
 				socket.send(JSON.stringify(action));
 
 				if (promise) {
+					next(action);
 					return promise;
 				}
 			}
