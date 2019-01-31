@@ -94,6 +94,16 @@ request.then(
 );
 ```
 
+Whether the promise will be resolved or rejected depends on the error
+boolean in the message from the server:
+```js
+{
+    type: 'MY_SERVER_RESPONSE',
+    requestId: 1, // the same request id that was sent to the server
+    error: true, // true would cause the promise to be rejected
+}
+```
+
 A numeric `requestId` will automatically be generated and added in the message to
 the server. When the server sends a message that includes the same `requestId`,
 the request promise will be completed.
@@ -144,38 +154,3 @@ function configureStore(initialState) {
     );
 }
 ```
-
-### Configuration options
-
-#### `errorType`: `string`
-
-Default: `ERROR`
-
-Used for rejecting promises when you're using the `promise: true` setting when
-sending messages to the server.
-
-For example: if you send dispatch this action:
-```js
-const promise = dispatch({
-    sendToServer: true,
-    promise: true,
-    type: 'MY_ACTION',
-    payload: {
-        message: 'Hello server!'
-    },
-    // The numeric property requestId will automatically be generated and sent to the server
-})
-```
-
-And the server responds with:
-```js
-{
-    requestId: 1, // The same request id that was sent in the request
-    type: 'ERROR', // The configurable errorType
-    payload: {
-        message: 'Hello client! Something went wrong.'
-    }
-}
-```
-
-Then the promise will be rejected.

@@ -19,20 +19,7 @@ interface UnfinishedRequests {
 	[requestId: string]: UnfinishedRequest;
 }
 
-export interface SocketConfig {
-	errorType: string;
-}
-
-const defaultConfig: SocketConfig = {
-	errorType: 'ERROR'
-};
-
-export function reduxReconnectingSocket(config: SocketConfig = defaultConfig): Middleware {
-	config = {
-		...defaultConfig,
-		...config
-	};
-
+export function reduxReconnectingSocket(): Middleware {
 	return ({ dispatch }) => {
 		let socket: SocketAbstraction;
 		let unfinishedRequests: UnfinishedRequests = {};
@@ -47,7 +34,7 @@ export function reduxReconnectingSocket(config: SocketConfig = defaultConfig): M
 			const request = unfinishedRequests[data.requestId];
 
 			if (request && !request.cancelled) {
-				if (data.type === config.errorType) {
+				if (data.error === true) {
 					request.reject(data);
 				} else {
 					request.resolve(data);
