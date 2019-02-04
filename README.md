@@ -1,7 +1,16 @@
 # Redux reconnecting socket
 
-Redux middleware and reducer for creating a websocket connection. When the
-connection drops it will automatically reconnect.
+Redux middleware and reducer for creating a websocket connection.
+
+Features
+* Send messages to the server simply by adding `sendToServer: true` to
+your actions.
+* Messages received from the server are automatically dispatched as
+actions.
+* Automatically tries to reconnect when the connection drops.
+* The `state.connection.connected` boolean is available in your store.
+* **Optional:** Use promises if you are expecting a response from the
+server after a certain message.
 
 ## Installation
 
@@ -13,39 +22,36 @@ npm install --save redux-reconnecting-socket
 
 ### 1. Configure it in your middleware
 ```js
+import { applyMiddleware, createStore } from 'redux';
 import { reduxReconnectingSocket } from 'redux-reconnecting-socket';
 
-function configureStore(initialState) {
-    return createStore(
-        rootReducer(history),
-        initialState,
-        composeEnhancer(
-            applyMiddleware(
-                routerMiddleware(history),
-                reduxReconnectingSocket()
-            )
-        )
-    );
-}
+const store = createStore(
+	rootReducer,
+	applyMiddleware(
+	    // ... other middleware
+		reduxReconnectingSocket()
+	)
+);
 ```
 
 ### 2. Configure it in your root reducer (optional)
 Only needed if you want to use the `state.connection.connected` boolean.
 
 ```js
+import { combineReducers } from 'redux';
 import {
     reduxReconnectingSocketReducer,
     defaulReduxReconnectingSocketState
 } from 'redux-reconnecting-socket';
 
 export const rootReducer =  (history) => combineReducers({
+    // ... other reducers
     connection: reduxReconnectingSocketReducer,
-    router: connectRouter(history),
 });
 
 export const defaultAppState = {
+    // ... other reducers
     connection: defaulReduxReconnectingSocketState,
-    router: null,
 };
 ```
 
@@ -130,27 +136,5 @@ Three things will happen when you `cancel` a request:
 {
     type: 'CANCEL_REQUEST',
     requestId: 1
-}
-```
-
-## Config
-
-You can configure the reduxReconnectingSocket middleware like this:
-```js
-import { reduxReconnectingSocket } from 'redux-reconnecting-socket';
-
-function configureStore(initialState) {
-    return createStore(
-        rootReducer(history),
-        initialState,
-        composeEnhancer(
-            applyMiddleware(
-                routerMiddleware(history),
-                reduxReconnectingSocket({
-                    errorType: 'MY_ERROR_TYPE'
-                })
-            )
-        )
-    );
 }
 ```
